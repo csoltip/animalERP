@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Sat Apr 30 23:32:52 CEST 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0180-7c64-08cb-00000c4c5eb8 
+on database directory C:\Users\David\Documents\NetBeansProjects\AnimalERP\aerpDB with class loader sun.misc.Launcher$AppClassLoader@55f96302 
+Loaded from file:/C:/Users/David/Documents/NetBeansProjects/AnimalERP/dist/run2132540296/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_231-b11
+user.dir=C:\Users\David\Documents\NetBeansProjects\AnimalERP
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

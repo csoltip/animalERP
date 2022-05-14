@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: #b3cde0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="animalerp.LoginController">
+   <center>
+      <AnchorPane prefHeight="313.0" prefWidth="493.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="41.0" layoutY="135.0" text="Felhasználónév">
+               <font>
+                  <Font name="Georgia" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="FelhasznaloSor" layoutX="189.0" layoutY="135.0" prefHeight="25.0" prefWidth="170.0" />
+            <Label layoutX="123.0" layoutY="192.0" text="Jelszó">
+               <font>
+                  <Font name="Georgia" size="20.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="jelszoSor" layoutX="189.0" layoutY="192.0" prefHeight="25.0" prefWidth="170.0" />
+            <Label layoutX="99.0" layoutY="38.0" text="Bejelentkezés">
+               <font>
+                  <Font name="Georgia" size="34.0" />
+               </font>
+            </Label>
+            <Button fx:id="belepesGmb" layoutX="124.0" layoutY="279.0" mnemonicParsing="false" onAction="#belepesGmbAkcio" prefHeight="24.0" prefWidth="153.0" style="-fx-background-color: red;" text="Belépés" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="bezarasGmb" layoutX="124.0" layoutY="327.0" mnemonicParsing="false" onAction="#bezarasGmbAkcio" prefHeight="24.0" prefWidth="153.0" style="-fx-background-color: red;" text="Bezárás" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Label fx:id="hibaUzenet" alignment="CENTER" layoutX="27.0" layoutY="241.0" prefHeight="16.0" prefWidth="338.0" textAlignment="CENTER" textFill="#d37272">
+               <font>
+                  <Font name="Georgia" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
