@@ -1,9 +1,9 @@
 package animalerp;
 
 
-import pojo.Szemely;
-import pojo.Allat;
-import pojo.Feladat;
+import pojo.Person;
+import pojo.Animal;
+import pojo.Assignment;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -38,13 +38,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 /**
- * GUI felépítése: menü és táblák inicializálása, formok létrehozása, eseményekezelők beállítása.
- * @author Bailo Dávid
+ * Building up the GUI: initializing menu and charts, creating forms, setting up event handlers.
+ * @author David Bailo
  */
 
 public class ViewController implements Initializable {
     
-//<editor-fold defaultstate="collapsed" desc="FXML deklaráció">
+//<editor-fold defaultstate="collapsed" desc="FXML declaration">
     @FXML
     private BorderPane mainPane;
     @FXML
@@ -52,124 +52,125 @@ public class ViewController implements Initializable {
     @FXML
     private StackPane menuPane;
     @FXML
-    private Pane szemelyekPane;
+    private Pane personsPane;
     @FXML
-    private Pane allatokPane;
+    private Pane animalsPane;
     @FXML
-    private Pane feladatokPane;
+    private Pane assignmentsPane;
     @FXML
     StackPane alertPane;
     @FXML
-    private TableView szemelyekTablazat;
+    private TableView personsTable;
     @FXML
-    private TableView allatokTablazat;
+    private TableView animalsTable;
     @FXML
-    private TableView feladatokTablazat;
+    private TableView assignmentsTable;
     @FXML
-    private TextField inputNev;
+    private TextField inputName;
     @FXML
-    private TextField inputSzam;
+    private TextField inputPhone;
     @FXML
-    private TextField inputCim;
+    private TextField inputAddress;
     @FXML
-    private TextField inputAllatNev;
+    private TextField inputAnimalName;
     @FXML
-    private TextField inputFajta;
+    private TextField inputBreed;
     @FXML
-    private ComboBox<String> inputGazda;
+    private ComboBox<String> inputOwner;
     @FXML
-    private TextField inputTargy;
+    private TextField inputSubject;
     @FXML
-    private ComboBox<String> inputFelel;
+    private ComboBox<String> inputAssignee;
     @FXML
-    private ComboBox<String> inputNem;
+    private ComboBox<String> inputSex;
     @FXML
-    private ComboBox<String> inputKat;
+    private ComboBox<String> inputCategory;
     @FXML
-    private ComboBox<String> inputAllatStatusz;
+    private ComboBox<String> inputAnimalStatus;
      @FXML
-    private ComboBox<String> inputFeladatStatusz;
+    private ComboBox<String> inputAssignmentStatus;
      @FXML
-    Button hibaGomb;
+    Button errorButton;
 //</editor-fold>
     
-    private final String MENU_SZEMELYEK = "Személyek";
-    private final String MENU_ALLATOK = "Állatok";
-    private final String MENU_FELADATOK = "Feladatok";
-    private final String MENU_KILEPES = "Kilépés";
+    private final String PERSONS_MENU = "Persons";
+    private final String ANIMALS_MENU = "Animals";
+    private final String ASSIGNMENTS_MENU = "Assignments";
+    private final String EXIT_MENU = "Exit";
     
-    DB ujDB = new DB();
+    DB newDB = new DB();
     
-    private final ObservableList<Szemely> szemelyek = FXCollections.observableArrayList();
-    private final ObservableList<Allat> allatok = FXCollections.observableArrayList();
-    private final ObservableList<Feladat> feladatok = FXCollections.observableArrayList();
+    private final ObservableList<Person> persons = FXCollections.observableArrayList();
+    private final ObservableList<Animal> animals = FXCollections.observableArrayList();
+    private final ObservableList<Assignment> assignments = FXCollections.observableArrayList();
     
     
-//<editor-fold defaultstate="collapsed" desc="Táblázatok inicializálása">
-    public void beallitSzemelyekTablazat() {
+//<editor-fold defaultstate="collapsed" desc="Initializing table views.">
+    public void setPersonsTable() {
         
-        TableColumn nevOszlop = new TableColumn("Név");
-        nevOszlop.setMinWidth(100);
-        nevOszlop.setCellFactory(TextFieldTableCell.forTableColumn());
-        nevOszlop.setCellValueFactory(new PropertyValueFactory<Szemely, String>("nev"));
-        nevOszlop.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Szemely, String>>() {
+        TableColumn nameColumn = new TableColumn("Name");
+        nameColumn.setMinWidth(100);
+        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
+        nameColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Person, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<Szemely, String> t) {
-                Szemely konkretSzemely = (Szemely) t.getTableView().getItems().get(t.getTablePosition().getRow());
-                konkretSzemely.setNev(t.getNewValue());
-                ujDB.modositSzemely(konkretSzemely);
+            public void handle(TableColumn.CellEditEvent<Person, String> t) {
+                Person actualPerson = (Person) t.getTableView().getItems().get(t.getTablePosition().getRow());
+                actualPerson.setName(t.getNewValue());
+                newDB.modifyPerson(actualPerson);
                 
             }
         });
         
-        TableColumn kategoriaOszlop = new TableColumn("Kategória");
-        kategoriaOszlop.setMinWidth(50);
-        kategoriaOszlop.setCellFactory(TextFieldTableCell.forTableColumn());
-        kategoriaOszlop.setCellValueFactory(new PropertyValueFactory<Szemely, String>("kategoria"));
-        kategoriaOszlop.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Szemely, String>>() {
+        TableColumn categoryColumn = new TableColumn("Category");
+        categoryColumn.setMinWidth(50);
+        categoryColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        categoryColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("category"));
+        categoryColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Person, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<Szemely, String> t) {
-                Szemely konkretSzemely = (Szemely) t.getTableView().getItems().get(t.getTablePosition().getRow());
-                konkretSzemely.setKategoria(t.getNewValue());
-                ujDB.modositSzemely(konkretSzemely);
+            public void handle(TableColumn.CellEditEvent<Person, String> t) {
+                Person actualPerson = (Person) t.getTableView().getItems().get(t.getTablePosition().getRow());
+                actualPerson.setCategory(t.getNewValue());
+                newDB.modifyPerson(actualPerson);
             }
         });
         
-        TableColumn telefonszamOszlop = new TableColumn("Telefonszám");
-        telefonszamOszlop.setMinWidth(120);
-        telefonszamOszlop.setCellFactory(TextFieldTableCell.forTableColumn());
-        telefonszamOszlop.setCellValueFactory(new PropertyValueFactory<Szemely, String>("telefonszam"));
-        telefonszamOszlop.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Szemely, String>>() {
+        TableColumn phoneColumn = new TableColumn("Phone number");
+        phoneColumn.setMinWidth(120);
+        phoneColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        phoneColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("phone"));
+        phoneColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Person, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<Szemely, String> t) {
-                Szemely konkretSzemely = (Szemely) t.getTableView().getItems().get(t.getTablePosition().getRow());
-                konkretSzemely.setTelefonszam(t.getNewValue());
-                ujDB.modositSzemely(konkretSzemely);
+            public void handle(TableColumn.CellEditEvent<Person, String> t) {
+                Person actualPerson = (Person) t.getTableView().getItems().get(t.getTablePosition().getRow());
+                actualPerson.setPhone(t.getNewValue());
+                newDB.modifyPerson(actualPerson);
             }
         });
         
-        TableColumn lakcimOszlop = new TableColumn("Lakcím");
-        lakcimOszlop.setMinWidth(200);
-        lakcimOszlop.setCellFactory(TextFieldTableCell.forTableColumn());
-        lakcimOszlop.setCellValueFactory(new PropertyValueFactory<Szemely, String>("lakcim"));
-        lakcimOszlop.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Szemely, String>>() {
+        TableColumn addressColumn = new TableColumn("Address");
+        addressColumn.setMinWidth(200);
+        addressColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        addressColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("address"));
+        addressColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Person, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<Szemely, String> t) {
-                Szemely konkretSzemely = (Szemely) t.getTableView().getItems().get(t.getTablePosition().getRow());
-                konkretSzemely.setLakcim(t.getNewValue());
-                ujDB.modositSzemely(konkretSzemely);
+            public void handle(TableColumn.CellEditEvent<Person, String> t) {
+                Person actualPerson = (Person) t.getTableView().getItems().get(t.getTablePosition().getRow());
+                actualPerson.setAddress(t.getNewValue());
+                newDB.modifyPerson(actualPerson);
             }
         });
         
-        TableColumn torlesOszlop = new TableColumn("Törlés");
-        torlesOszlop.setMinWidth(100);
+        TableColumn deleteColumn = new TableColumn("Delete");
+        deleteColumn.setMinWidth(100);
         
-        Callback<TableColumn<Szemely, String>, TableCell<Szemely, String>> cellFactory
-                = new Callback<TableColumn<Szemely, String>, TableCell<Szemely, String>>() {
+        // Creating a delete button and its event handler
+        Callback<TableColumn<Person, String>, TableCell<Person, String>> cellFactory
+                = new Callback<TableColumn<Person, String>, TableCell<Person, String>>() {
                     @Override
-                    public TableCell call(final TableColumn<Szemely, String> param) {
-                        final TableCell<Szemely, String> cell = new TableCell<Szemely, String>() {
-                            final Button gomb = new Button("Törlés");
+                    public TableCell call(final TableColumn<Person, String> param) {
+                        final TableCell<Person, String> cell = new TableCell<Person, String>() {
+                            final Button button = new Button("Delete");
                             
                             @Override
                             public void updateItem(String item, boolean empty) {
@@ -178,14 +179,14 @@ public class ViewController implements Initializable {
                                     setGraphic(null);
                                     setText(null);
                                 } else {
-                                    gomb.setOnAction((ActionEvent event)
+                                    button.setOnAction((ActionEvent event)
                                             -> {
-                                        Szemely szemely = getTableView().getItems().get(getIndex());
-                                        szemelyek.remove(szemely);
-                                        ujDB.torolSzemely(szemely);
-                                        feladatFelelosFeltoltes();
+                                        Person person = getTableView().getItems().get(getIndex());
+                                        persons.remove(person);
+                                        newDB.deletePerson(person);
+                                        collectAssignees();
                                     });
-                                    setGraphic(gomb);
+                                    setGraphic(button);
                                     setText(null);
                                 }
                             }
@@ -194,94 +195,95 @@ public class ViewController implements Initializable {
                     }
                 };
         
-        torlesOszlop.setCellFactory(cellFactory);
+        deleteColumn.setCellFactory(cellFactory);
         
-        szemelyekTablazat.getColumns().addAll(nevOszlop, kategoriaOszlop, telefonszamOszlop, lakcimOszlop, torlesOszlop);
-        szemelyek.addAll(ujDB.getOsszesSzemely());
-        szemelyekTablazat.setItems(szemelyek);
+        personsTable.getColumns().addAll(nameColumn, categoryColumn, phoneColumn, addressColumn, deleteColumn);
+        persons.addAll(newDB.getAllPersons());
+        personsTable.setItems(persons);
         
     }
     
-    public void beallitAllatokTablazat() {
+    public void setAnimalsTable() {
         
-        allatGazdaFeltoltes();
-        TableColumn nevOszlop = new TableColumn("Név");
-        nevOszlop.setMinWidth(90);
-        nevOszlop.setCellFactory(TextFieldTableCell.forTableColumn());
-        nevOszlop.setCellValueFactory(new PropertyValueFactory<Allat, String>("nev"));
-        nevOszlop.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Allat, String>>() {
+        collectOwners();
+        TableColumn nameColumn = new TableColumn("Name");
+        nameColumn.setMinWidth(90);
+        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Animal, String>("name"));
+        nameColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Animal, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<Allat, String> t) {
-                Allat konkretAllat = (Allat) t.getTableView().getItems().get(t.getTablePosition().getRow());
-                konkretAllat.setNev(t.getNewValue());
-                ujDB.modositAllat(konkretAllat);
+            public void handle(TableColumn.CellEditEvent<Animal, String> t) {
+                Animal actualAnimal = (Animal) t.getTableView().getItems().get(t.getTablePosition().getRow());
+                actualAnimal.setName(t.getNewValue());
+                newDB.modifyAnimal(actualAnimal);
                 
             }
         });
         
-        TableColumn fajtaOszlop = new TableColumn("Fajta");
-        fajtaOszlop.setMinWidth(50);
-        fajtaOszlop.setCellFactory(TextFieldTableCell.forTableColumn());
-        fajtaOszlop.setCellValueFactory(new PropertyValueFactory<Szemely, String>("fajta"));
-        fajtaOszlop.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Allat, String>>() {
+        TableColumn breedColumn = new TableColumn("Breed");
+        breedColumn.setMinWidth(50);
+        breedColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        breedColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("breed"));
+        breedColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Animal, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<Allat, String> t) {
-                Allat konkretAllat = (Allat) t.getTableView().getItems().get(t.getTablePosition().getRow());
-                konkretAllat.setFajta(t.getNewValue());
-                ujDB.modositAllat(konkretAllat);
+            public void handle(TableColumn.CellEditEvent<Animal, String> t) {
+                Animal actualAnimal = (Animal) t.getTableView().getItems().get(t.getTablePosition().getRow());
+                actualAnimal.setFajta(t.getNewValue());
+                newDB.modifyAnimal(actualAnimal);
             }
         });
         
-        TableColumn nemOszlop = new TableColumn("Nem");
-        nemOszlop.setMinWidth(100);
-        nemOszlop.setCellFactory(TextFieldTableCell.forTableColumn());
-        nemOszlop.setCellValueFactory(new PropertyValueFactory<Allat, String>("nem"));
-        nemOszlop.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Allat, String>>() {
+        TableColumn sexColumn = new TableColumn("Sex");
+        sexColumn.setMinWidth(100);
+        sexColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        sexColumn.setCellValueFactory(new PropertyValueFactory<Animal, String>("sex"));
+        sexColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Animal, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<Allat, String> t) {
-                Allat konkretAllat = (Allat) t.getTableView().getItems().get(t.getTablePosition().getRow());
-                konkretAllat.setNem(t.getNewValue());
-                ujDB.modositAllat(konkretAllat);
+            public void handle(TableColumn.CellEditEvent<Animal, String> t) {
+                Animal actualAnimal = (Animal) t.getTableView().getItems().get(t.getTablePosition().getRow());
+                actualAnimal.setSex(t.getNewValue());
+                newDB.modifyAnimal(actualAnimal);
             }
         });
         
-        TableColumn gazdaOszlop = new TableColumn("Gazda");
-        gazdaOszlop.setMinWidth(120);
-        gazdaOszlop.setCellFactory(TextFieldTableCell.forTableColumn());
-        gazdaOszlop.setCellValueFactory(new PropertyValueFactory<Allat, String>("gazda"));
-        gazdaOszlop.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Allat, String>>() {
+        TableColumn ownerColumn = new TableColumn("Owner");
+        ownerColumn.setMinWidth(120);
+        ownerColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        ownerColumn.setCellValueFactory(new PropertyValueFactory<Animal, String>("owner"));
+        ownerColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Animal, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<Allat, String> t) {
-                Allat konkretAllat = (Allat) t.getTableView().getItems().get(t.getTablePosition().getRow());
-                konkretAllat.setGazda(t.getNewValue());
-                ujDB.modositAllat(konkretAllat);
+            public void handle(TableColumn.CellEditEvent<Animal, String> t) {
+                Animal actualAnimal = (Animal) t.getTableView().getItems().get(t.getTablePosition().getRow());
+                actualAnimal.setOwner(t.getNewValue());
+                newDB.modifyAnimal(actualAnimal);
             }
         });
         
-        TableColumn statuszOszlop = new TableColumn("Státusz");
-        statuszOszlop.setMinWidth(160);
-        statuszOszlop.setCellFactory(TextFieldTableCell.forTableColumn());
-        statuszOszlop.setCellValueFactory(new PropertyValueFactory<Allat, String>("statusz"));
-        statuszOszlop.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Allat, String>>() {
+        TableColumn statusColumn = new TableColumn("Status");
+        statusColumn.setMinWidth(160);
+        statusColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        statusColumn.setCellValueFactory(new PropertyValueFactory<Animal, String>("status"));
+        statusColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Animal, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<Allat, String> t) {
-                Allat konkretAllat = (Allat) t.getTableView().getItems().get(t.getTablePosition().getRow());
-                konkretAllat.setStatusz(t.getNewValue());
-                ujDB.modositAllat(konkretAllat);
+            public void handle(TableColumn.CellEditEvent<Animal, String> t) {
+                Animal actualAnimal = (Animal) t.getTableView().getItems().get(t.getTablePosition().getRow());
+                actualAnimal.setStatus(t.getNewValue());
+                newDB.modifyAnimal(actualAnimal);
             }
         });
         
         
         
-        TableColumn torlesOszlop = new TableColumn("Törlés");
-        torlesOszlop.setMinWidth(100);
+        TableColumn deleteColumn = new TableColumn("Delete");
+        deleteColumn.setMinWidth(100);
         
-        Callback<TableColumn<Allat, String>, TableCell<Allat, String>> cellFactory
-                = new Callback<TableColumn<Allat, String>, TableCell<Allat, String>>() {
+        // Creating a delete button and its event handler
+        Callback<TableColumn<Animal, String>, TableCell<Animal, String>> cellFactory
+                = new Callback<TableColumn<Animal, String>, TableCell<Animal, String>>() {
                     @Override
-                    public TableCell call(final TableColumn<Allat, String> param) {
-                        final TableCell<Allat, String> cell = new TableCell<Allat, String>() {
-                            final Button gomb = new Button("Törlés");
+                    public TableCell call(final TableColumn<Animal, String> param) {
+                        final TableCell<Animal, String> cell = new TableCell<Animal, String>() {
+                            final Button button = new Button("Delete");
                             
                             @Override
                             public void updateItem(String item, boolean empty) {
@@ -290,13 +292,13 @@ public class ViewController implements Initializable {
                                     setGraphic(null);
                                     setText(null);
                                 } else {
-                                    gomb.setOnAction((ActionEvent event)
+                                    button.setOnAction((ActionEvent event)
                                             -> {
-                                        Allat allat = getTableView().getItems().get(getIndex());
-                                        allatok.remove(allat);
-                                        ujDB.torolAllat(allat);
+                                        Animal animal = getTableView().getItems().get(getIndex());
+                                        animals.remove(animal);
+                                        newDB.deleteAnimal(animal);
                                     });
-                                    setGraphic(gomb);
+                                    setGraphic(button);
                                     setText(null);
                                 }
                             }
@@ -305,66 +307,67 @@ public class ViewController implements Initializable {
                     }
                 };
         
-        torlesOszlop.setCellFactory(cellFactory);
+        deleteColumn.setCellFactory(cellFactory);
         
-        allatokTablazat.getColumns().addAll(nevOszlop, fajtaOszlop, nemOszlop, gazdaOszlop, statuszOszlop, torlesOszlop);
-        allatok.addAll(ujDB.getOsszesAllat());
-        allatokTablazat.setItems(allatok);
+        animalsTable.getColumns().addAll(nameColumn, breedColumn, sexColumn, ownerColumn, statusColumn, deleteColumn);
+        animals.addAll(newDB.getAllAnimals());
+        animalsTable.setItems(animals);
     }
     
-    public void beallitFeladatokTablazat() {
+    public void setAssignmentsTable() {
         
-        feladatFelelosFeltoltes();
-        TableColumn statOszlop = new TableColumn("Státusz");
+        collectAssignees();
+        TableColumn statOszlop = new TableColumn("Status");
         statOszlop.setMinWidth(100);
         statOszlop.setCellFactory(TextFieldTableCell.forTableColumn());
-        statOszlop.setCellValueFactory(new PropertyValueFactory<Feladat, String>("statusz"));
-        statOszlop.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Feladat, String>>() {
+        statOszlop.setCellValueFactory(new PropertyValueFactory<Assignment, String>("status"));
+        statOszlop.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Assignment, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<Feladat, String> t) {
-                Feladat konkretFeladat = (Feladat) t.getTableView().getItems().get(t.getTablePosition().getRow());
-                konkretFeladat.setStatusz(t.getNewValue());
-                ujDB.modositFeladat(konkretFeladat);
+            public void handle(TableColumn.CellEditEvent<Assignment, String> t) {
+                Assignment actualAssignment = (Assignment) t.getTableView().getItems().get(t.getTablePosition().getRow());
+                actualAssignment.setStatusz(t.getNewValue());
+                newDB.modifyAssignment(actualAssignment);
                 
             }
         });
         
-        TableColumn targyOszlop = new TableColumn("Tárgy");
-        targyOszlop.setMinWidth(70);
-        targyOszlop.setCellFactory(TextFieldTableCell.forTableColumn());
-        targyOszlop.setCellValueFactory(new PropertyValueFactory<Szemely, String>("targy"));
-        targyOszlop.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Feladat, String>>() {
+        TableColumn subjectColumn = new TableColumn("Subject");
+        subjectColumn.setMinWidth(70);
+        subjectColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        subjectColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("subject"));
+        subjectColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Assignment, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<Feladat, String> t) {
-                Feladat konkretFeladat = (Feladat) t.getTableView().getItems().get(t.getTablePosition().getRow());
-                konkretFeladat.setTargy(t.getNewValue());
-                ujDB.modositFeladat(konkretFeladat);
+            public void handle(TableColumn.CellEditEvent<Assignment, String> t) {
+                Assignment actualAssignment = (Assignment) t.getTableView().getItems().get(t.getTablePosition().getRow());
+                actualAssignment.setSubject(t.getNewValue());
+                newDB.modifyAssignment(actualAssignment);
             }
         });
         
-        TableColumn felelOszlop = new TableColumn("Felelős");
-        felelOszlop.setMinWidth(70);
-        felelOszlop.setCellFactory(TextFieldTableCell.forTableColumn());
-        felelOszlop.setCellValueFactory(new PropertyValueFactory<Szemely, String>("felelos"));
-        felelOszlop.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Feladat, String>>() {
+        TableColumn assigneeColumn = new TableColumn("Assignee");
+        assigneeColumn.setMinWidth(70);
+        assigneeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        assigneeColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("assignee"));
+        assigneeColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Assignment, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<Feladat, String> t) {
-                Feladat konkretFeladat = (Feladat) t.getTableView().getItems().get(t.getTablePosition().getRow());
-                konkretFeladat.setFelelos(t.getNewValue());
-                ujDB.modositFeladat(konkretFeladat);
+            public void handle(TableColumn.CellEditEvent<Assignment, String> t) {
+                Assignment actualAssignment = (Assignment) t.getTableView().getItems().get(t.getTablePosition().getRow());
+                actualAssignment.setAssignee(t.getNewValue());
+                newDB.modifyAssignment(actualAssignment);
             }
         });
         
         
-        TableColumn torlesOszlop = new TableColumn("Törlés");
-        torlesOszlop.setMinWidth(100);
+        TableColumn deleteColumn = new TableColumn("Delete");
+        deleteColumn.setMinWidth(100);
         
-        Callback<TableColumn<Feladat, String>, TableCell<Feladat, String>> cellFactory
-                = new Callback<TableColumn<Feladat, String>, TableCell<Feladat, String>>() {
+        // Creating a delete button and its event handler
+        Callback<TableColumn<Assignment, String>, TableCell<Assignment, String>> cellFactory
+                = new Callback<TableColumn<Assignment, String>, TableCell<Assignment, String>>() {
                     @Override
-                    public TableCell call(final TableColumn<Feladat, String> param) {
-                        final TableCell<Feladat, String> cell = new TableCell<Feladat, String>() {
-                            final Button gomb = new Button("Törlés");
+                    public TableCell call(final TableColumn<Assignment, String> param) {
+                        final TableCell<Assignment, String> cell = new TableCell<Assignment, String>() {
+                            final Button button = new Button("Delete");
                             
                             @Override
                             public void updateItem(String item, boolean empty) {
@@ -373,13 +376,13 @@ public class ViewController implements Initializable {
                                     setGraphic(null);
                                     setText(null);
                                 } else {
-                                    gomb.setOnAction((ActionEvent event)
+                                    button.setOnAction((ActionEvent event)
                                             -> {
-                                        Feladat feladat = getTableView().getItems().get(getIndex());
-                                        feladatok.remove(feladat);
-                                        ujDB.torolFeladat(feladat);
+                                        Assignment assignment = getTableView().getItems().get(getIndex());
+                                        assignments.remove(assignment);
+                                        newDB.deleteAssignment(assignment);
                                     });
-                                    setGraphic(gomb);
+                                    setGraphic(button);
                                     setText(null);
                                 }
                             }
@@ -388,57 +391,58 @@ public class ViewController implements Initializable {
                     }
                 };
         
-        torlesOszlop.setCellFactory(cellFactory);
+        deleteColumn.setCellFactory(cellFactory);
         
-        feladatokTablazat.getColumns().addAll(statOszlop, targyOszlop, felelOszlop, torlesOszlop);
-        feladatok.addAll(ujDB.getOsszesFeladat());
-        feladatokTablazat.setItems(feladatok);
+        assignmentsTable.getColumns().addAll(statOszlop, subjectColumn, assigneeColumn, deleteColumn);
+        assignments.addAll(newDB.getAllAssignments());
+        assignmentsTable.setItems(assignments);
     }
     
-    public void beallitMenu() throws NullPointerException {
+    public void setMenu() throws NullPointerException {
         
-        TreeItem<String> faGyoker = new TreeItem<>("Menu");
-        TreeView<String> faNezet = new TreeView<>(faGyoker);
-        faNezet.setShowRoot(false);
+        TreeItem<String> treeRoot = new TreeItem<>("Menu");
+        TreeView<String> treeView = new TreeView<>(treeRoot);
+        treeView.setShowRoot(false);
         
-        Node szemelyekLogo = new ImageView(new Image(getClass().getResourceAsStream("/icon/szemelyek.png")));
-        Node allatokLogo = new ImageView(new Image(getClass().getResourceAsStream("/icon/allatok.png")));
-        Node feladatokLogo = new ImageView(new Image(getClass().getResourceAsStream("/icon/feladatok.png")));
-        Node kilepesLogo = new ImageView(new Image(getClass().getResourceAsStream("/icon/kilepes.png")));
+        Node personsLogo = new ImageView(new Image(getClass().getResourceAsStream("/icon/persons.png")));
+        Node animalsLogo = new ImageView(new Image(getClass().getResourceAsStream("/icon/animals.png")));
+        Node assignmentsLogo = new ImageView(new Image(getClass().getResourceAsStream("/icon/assignments.png")));
+        Node exitLogo = new ImageView(new Image(getClass().getResourceAsStream("/icon/exit.png")));
         
-        TreeItem<String> menupontA = new TreeItem<>(MENU_SZEMELYEK, szemelyekLogo);
-        TreeItem<String> menupontB = new TreeItem<>(MENU_ALLATOK, allatokLogo);
-        TreeItem<String> menupontC = new TreeItem<>(MENU_FELADATOK, feladatokLogo);
-        TreeItem<String> menupontD = new TreeItem<>(MENU_KILEPES, kilepesLogo);
+        TreeItem<String> menuA = new TreeItem<>(PERSONS_MENU, personsLogo);
+        TreeItem<String> menuB = new TreeItem<>(ANIMALS_MENU, animalsLogo);
+        TreeItem<String> menuC = new TreeItem<>(ASSIGNMENTS_MENU, assignmentsLogo);
+        TreeItem<String> menuD = new TreeItem<>(EXIT_MENU, exitLogo);
         
-        faGyoker.getChildren().addAll(menupontA, menupontB, menupontC, menupontD);
+        treeRoot.getChildren().addAll(menuA, menuB, menuC, menuD);
         
-        menuPane.getChildren().add(faNezet);
+        menuPane.getChildren().add(treeView);
         
-        faNezet.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            public void changed(ObservableValue megfigyelt, Object regiErtek, Object ujErtek) {
-                TreeItem<String> valasztottMenupont = (TreeItem<String>) ujErtek;
-                String valasztottMenu;
-                valasztottMenu = valasztottMenupont.getValue();
+        // Navigating trough the menu
+        treeView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            public void changed(ObservableValue observed, Object oldaValue, Object newValue) {
+                TreeItem<String> selectedMenuItem = (TreeItem<String>) newValue;
+                String selectedMenu;
+                selectedMenu = selectedMenuItem.getValue();
                 
-                if (null != valasztottMenu) {
-                    switch (valasztottMenu) {
-                        case (MENU_SZEMELYEK):
-                            szemelyekPane.setVisible(true);
-                            allatokPane.setVisible(false);
-                            feladatokPane.setVisible(false);
+                if (null != selectedMenu) {
+                    switch (selectedMenu) {
+                        case (PERSONS_MENU):
+                            personsPane.setVisible(true);
+                            animalsPane.setVisible(false);
+                            assignmentsPane.setVisible(false);
                             break;
-                        case (MENU_ALLATOK):
-                            szemelyekPane.setVisible(false);
-                            allatokPane.setVisible(true);
-                            feladatokPane.setVisible(false);
+                        case (ANIMALS_MENU):
+                            personsPane.setVisible(false);
+                            animalsPane.setVisible(true);
+                            assignmentsPane.setVisible(false);
                             break;
-                        case (MENU_FELADATOK):
-                            szemelyekPane.setVisible(false);
-                            allatokPane.setVisible(false);
-                            feladatokPane.setVisible(true);
+                        case (ASSIGNMENTS_MENU):
+                            personsPane.setVisible(false);
+                            animalsPane.setVisible(false);
+                            assignmentsPane.setVisible(true);
                             break;
-                        case (MENU_KILEPES):
+                        case (EXIT_MENU):
                             System.exit(0);
                             break;
                     }
@@ -451,51 +455,51 @@ public class ViewController implements Initializable {
 //</editor-fold>
     
     
-//<editor-fold defaultstate="collapsed" desc="Új rekord felvétele">
+//<editor-fold defaultstate="collapsed" desc="Adding new records">
     @FXML
-    public void hozzaadSzemely(ActionEvent event) {
+    public void addPerson(ActionEvent event) {
         
-        if(inputNev.getText() != null && !inputNev.getText().equals("")){
-        Szemely hozzaadottSzemely = new Szemely(inputNev.getText(), inputKat.getValue(), inputSzam.getText(), inputCim.getText());
-        szemelyek.add(hozzaadottSzemely);
-        ujDB.ujSzemely(hozzaadottSzemely);
-        inputNev.clear();
-        inputSzam.clear();
-        inputCim.clear();
+        if(inputName.getText() != null && !inputName.getText().equals("")){
+        Person addedPerson = new Person(inputName.getText(), inputCategory.getValue(), inputPhone.getText(), inputAddress.getText());
+        persons.add(addedPerson);
+        newDB.newPerson(addedPerson);
+        inputName.clear();
+        inputPhone.clear();
+        inputAddress.clear();
         } else {
-            alert("Nem adtál meg nevet!");
+            alert("You did not write a name!");
         }
-        feladatFelelosFeltoltes();
-        allatGazdaFeltoltes();
+        collectAssignees();
+        collectOwners();
     }
     
     @FXML
-    public void hozzaadAllat(ActionEvent event) {
+    public void addAnimal(ActionEvent event) {
         
-        if(inputAllatNev.getText() != null && !inputAllatNev.getText().equals("")){
-        Allat hozzaadottAllat = new Allat(inputAllatNev.getText(), inputFajta.getText(), inputNem.getValue(), inputGazda.getValue(), inputAllatStatusz.getValue());
-        allatok.add(hozzaadottAllat);
-        ujDB.ujAllat(hozzaadottAllat);
-        inputAllatNev.clear();
-        inputFajta.clear();
+        if(inputAnimalName.getText() != null && !inputAnimalName.getText().equals("")){
+        Animal addedAnimal = new Animal(inputAnimalName.getText(), inputBreed.getText(), inputSex.getValue(), inputOwner.getValue(), inputAnimalStatus.getValue());
+        animals.add(addedAnimal);
+        newDB.newAnimal(addedAnimal);
+        inputAnimalName.clear();
+        inputBreed.clear();
         
         } else {
-            alert("Nem adtál meg nevet!");
+            alert("You did not write a name!");
         }
         
     }
     
     @FXML
-    public void hozzaadFeladat(ActionEvent event) {
+    public void addAssignment(ActionEvent event) {
         
-        if(inputTargy.getText() != null && !inputTargy.getText().equals("")){
-        Feladat hozzaadottFeladat = new Feladat(inputFeladatStatusz.getValue(), inputTargy.getText(), inputFelel.getValue());
-        feladatok.add(hozzaadottFeladat);
-        ujDB.ujFeladat(hozzaadottFeladat);
-        inputTargy.clear();
+        if(inputSubject.getText() != null && !inputSubject.getText().equals("")){
+        Assignment addedAssignment = new Assignment(inputAssignmentStatus.getValue(), inputSubject.getText(), inputAssignee.getValue());
+        assignments.add(addedAssignment);
+        newDB.newAssignment(addedAssignment);
+        inputSubject.clear();
 
         } else {
-            alert("Nem adtál meg tárgyat!");
+            alert("You did not write a subject!");
         }
     }
     
@@ -507,18 +511,18 @@ public class ViewController implements Initializable {
 
         Label label = new Label(text);
         label.setMinSize(200, 40);
-        Button hibaGomb = new Button("OK");
-        hibaGomb.setMinSize(100, 40);
-        VBox vbox = new VBox(label, hibaGomb);
+        Button errorButton = new Button("OK");
+        errorButton.setMinSize(100, 40);
+        VBox vbox = new VBox(label, errorButton);
         vbox.setAlignment(Pos.CENTER);
-        hibaGomb.setAlignment(Pos.CENTER);
+        errorButton.setAlignment(Pos.CENTER);
         
         mainPane.getChildren().add(vbox);
         vbox.setLayoutX(500);
         vbox.setLayoutY(400);
         vbox.setMinSize(500, 500);
 
-        hibaGomb.setOnAction(new EventHandler<ActionEvent>() {
+        errorButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 mainPane.getChildren().remove(vbox);
@@ -539,73 +543,73 @@ public class ViewController implements Initializable {
 //</editor-fold>
     
     
-//<editor-fold defaultstate="collapsed" desc="Legördülő menük">
-    public void szemelyKatFeltoltes() {
-        inputKat.getItems().clear();
-        ArrayList<String> szemelyKategoriak = new ArrayList<String>();
-        szemelyKategoriak.add("Egyesületi tag");
-        szemelyKategoriak.add("Jegyző");
-        szemelyKategoriak.add("Állattartó");
-        szemelyKategoriak.add("Ideiglenes befogadó");
-        szemelyKategoriak.add("Gyepmester");
-        szemelyKategoriak.add("Egyéb");
+//<editor-fold defaultstate="collapsed" desc="Dropdown lists">
+    public void collectPersonCategories() {
+        inputCategory.getItems().clear();
+        ArrayList<String> personCategories = new ArrayList<String>();
+        personCategories.add("Associate");
+        personCategories.add("Notary");
+        personCategories.add("Animal keeper");
+        personCategories.add("Temporary host");
+        personCategories.add("Flayer");
+        personCategories.add("Else");
         
-        for (int i = 0; i < szemelyKategoriak.size(); i++) {
-            inputKat.getItems().add(szemelyKategoriak.get(i).toString());
+        for (int i = 0; i < personCategories.size(); i++) {
+            inputCategory.getItems().add(personCategories.get(i).toString());
         }
     }
     
-    public void feladatStatFeltoltes() {
-        inputFeladatStatusz.getItems().clear();
-        ArrayList<String> feladatStatuszok = new ArrayList<String>();
-        feladatStatuszok.add("Új");
-        feladatStatuszok.add("Folyamatban");
-        feladatStatuszok.add("Lezárt");
+    public void collectAssignmentStatus() {
+        inputAssignmentStatus.getItems().clear();
+        ArrayList<String> assignmentStatuses = new ArrayList<String>();
+        assignmentStatuses.add("New");
+        assignmentStatuses.add("In progess");
+        assignmentStatuses.add("Done");
         
-        for (int i = 0; i < feladatStatuszok.size(); i++) {
-            inputFeladatStatusz.getItems().add(feladatStatuszok.get(i).toString());
+        for (int i = 0; i < assignmentStatuses.size(); i++) {
+            inputAssignmentStatus.getItems().add(assignmentStatuses.get(i).toString());
         }
     }
     
-    public void feladatFelelosFeltoltes() {
-        inputFelel.getItems().clear();
-        ArrayList<String> felelosok = ujDB.getTagSzemelyNev();
+    public void collectAssignees() {
+        inputAssignee.getItems().clear();
+        ArrayList<String> assignees = newDB.getAssociatesNames();
         
-        for (int i = 0; i < felelosok.size(); i++) {
-            inputFelel.getItems().add(felelosok.get(i).toString());
+        for (int i = 0; i < assignees.size(); i++) {
+            inputAssignee.getItems().add(assignees.get(i).toString());
         }
     }
     
-    public void allatNemFeltoltes() {
-        inputNem.getItems().clear();
-        ArrayList<String> allatNemek = new ArrayList<String>();
-        allatNemek.add("Kan");
-        allatNemek.add("Szuka");
-        allatNemek.add("Ismeretlen");
+    public void collectAnimalSexes() {
+        inputSex.getItems().clear();
+        ArrayList<String> animalSexes = new ArrayList<String>();
+        animalSexes.add("Male");
+        animalSexes.add("Female");
+        animalSexes.add("Unknown");
         
-        for (int i = 0; i < allatNemek.size(); i++) {
-            inputNem.getItems().add(allatNemek.get(i).toString());
+        for (int i = 0; i < animalSexes.size(); i++) {
+            inputSex.getItems().add(animalSexes.get(i).toString());
         }
     }
     
-    public void allatStatuszFeltoltes() {
-        inputAllatStatusz.getItems().clear();
-        ArrayList<String> allatStatuszok = new ArrayList<String>();
-        allatStatuszok.add("Gazdis");
-        allatStatuszok.add("Örökbefogadásra vár");
-        allatStatuszok.add("Kóbor");
+    public void collectAnimalStatuses() {
+        inputAnimalStatus.getItems().clear();
+        ArrayList<String> animalStatuses = new ArrayList<String>();
+        animalStatuses.add("In care");
+        animalStatuses.add("Waiting for adoption");
+        animalStatuses.add("Stray");
         
-        for (int i = 0; i < allatStatuszok.size(); i++) {
-            inputAllatStatusz.getItems().add(allatStatuszok.get(i).toString());
+        for (int i = 0; i < animalStatuses.size(); i++) {
+            inputAnimalStatus.getItems().add(animalStatuses.get(i).toString());
         }
     }
     
-    public void allatGazdaFeltoltes() {
-        inputGazda.getItems().clear();
-        ArrayList<String> gazdak = ujDB.getAllatGazdaNev();
+    public void collectOwners() {
+        inputOwner.getItems().clear();
+        ArrayList<String> owners = newDB.getPetOwnersNames();
         
-        for (int i = 0; i < gazdak.size(); i++) {
-            inputGazda.getItems().add(gazdak.get(i).toString());
+        for (int i = 0; i < owners.size(); i++) {
+            inputOwner.getItems().add(owners.get(i).toString());
         }
     }
 //</editor-fold>
@@ -614,15 +618,15 @@ public class ViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        beallitSzemelyekTablazat();
-        beallitAllatokTablazat();
-        beallitFeladatokTablazat();
-        beallitMenu();
-        feladatFelelosFeltoltes();
-        allatNemFeltoltes();
-        allatStatuszFeltoltes();
-        szemelyKatFeltoltes();
-        feladatStatFeltoltes();
+        setPersonsTable();
+        setAnimalsTable();
+        setAssignmentsTable();
+        setMenu();
+        collectAssignees();
+        collectAnimalSexes();
+        collectAnimalStatuses();
+        collectPersonCategories();
+        collectAssignmentStatus();
     }    
     
 }

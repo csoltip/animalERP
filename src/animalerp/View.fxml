@@ -23,81 +23,81 @@
    <center>
       <AnchorPane id="anchorPane" fx:id="anchorPane" prefHeight="757.0" prefWidth="710.0">
           <children>
-            <Pane id="szemelyekPane" fx:id="szemelyekPane" layoutY="90.0" prefHeight="700.0" prefWidth="700.0" AnchorPane.topAnchor="0.0">
+            <Pane id="personsPane" fx:id="personsPane" layoutY="90.0" prefHeight="700.0" prefWidth="700.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="203.0" prefHeight="79.0" prefWidth="294.0" text="Személyek" textAlignment="CENTER">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="203.0" prefHeight="79.0" prefWidth="294.0" text="Persons" textAlignment="CENTER">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <TableView id="szemelyekTablazat" fx:id="szemelyekTablazat" editable="true" prefHeight="513.0" prefWidth="700.0" />
+                  <TableView id="personsTable" fx:id="personsTable" editable="true" prefHeight="513.0" prefWidth="700.0" />
                   <VBox alignment="CENTER_RIGHT" layoutX="14.0" layoutY="527.0" prefHeight="131.0" prefWidth="97.0" spacing="15.0">
                      <children>
-                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="529.0" prefHeight="21.0" prefWidth="88.0" text="Név:" />
-                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="562.0" prefHeight="21.0" prefWidth="88.0" text="Kategória:" />
-                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="592.0" prefHeight="21.0" prefWidth="88.0" text="Telefonszám:" />
-                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="623.0" prefHeight="21.0" prefWidth="88.0" text="Lakcím:" />
+                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="529.0" prefHeight="21.0" prefWidth="88.0" text="Name:" />
+                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="562.0" prefHeight="21.0" prefWidth="88.0" text="Category:" />
+                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="592.0" prefHeight="21.0" prefWidth="88.0" text="Phone number" />
+                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="623.0" prefHeight="21.0" prefWidth="88.0" text="Address:" />
                      </children>
                   </VBox>
                   <VBox layoutX="119.0" layoutY="521.0" spacing="6.0">
                      <children>
-                        <TextField id="inputNev" fx:id="inputNev" layoutX="119.0" layoutY="521.0" prefHeight="31.0" prefWidth="561.0" promptText="Koaxk Ábel" />
-                        <ComboBox id="inputKat" fx:id="inputKat" layoutX="119.0" layoutY="562.0" prefHeight="31.0" prefWidth="561.0" />
-                        <TextField id="inputSzam" fx:id="inputSzam" layoutX="119.0" layoutY="593.0" prefHeight="31.0" prefWidth="561.0" promptText="+36701234567" />
-                        <TextField id="inputCim" fx:id="inputCim" layoutX="119.0" layoutY="627.0" prefHeight="31.0" prefWidth="561.0" promptText="6430 Delejesfalva, Viharváradi út 1." />
+                        <TextField id="inputName" fx:id="inputName" layoutX="119.0" layoutY="521.0" prefHeight="31.0" prefWidth="561.0" promptText="Rick O'Shea" />
+                        <ComboBox id="inputCategory" fx:id="inputCategory" layoutX="119.0" layoutY="562.0" prefHeight="31.0" prefWidth="561.0" />
+                        <TextField id="inputPhone" fx:id="inputPhone" layoutX="119.0" layoutY="593.0" prefHeight="31.0" prefWidth="561.0" promptText="+36701234567" />
+                        <TextField id="inputAddress" fx:id="inputAddress" layoutX="119.0" layoutY="627.0" prefHeight="31.0" prefWidth="561.0" promptText="6430 Delejesfalva, Viharváradi street 1." />
                      </children>
                   </VBox>
-                  <Button id="ujSzemelyGomb" fx:id="ujSzemelyGomb" alignment="CENTER" layoutX="235.0" layoutY="667.0" mnemonicParsing="false" onAction="#hozzaadSzemely" prefHeight="31.0" prefWidth="231.0" text="Új személy felvétele" />
+                  <Button id="newPersonButton" fx:id="newPersonButton" alignment="CENTER" layoutX="235.0" layoutY="667.0" mnemonicParsing="false" onAction="#addPerson" prefHeight="31.0" prefWidth="231.0" text="Add a person" />
                </children>
             </Pane>
-            <Pane id="allatokPane" fx:id="allatokPane" layoutY="90.0" prefHeight="700.0" prefWidth="700.0" visible="false" AnchorPane.topAnchor="0.0">
+            <Pane id="animalsPane" fx:id="animalsPane" layoutY="90.0" prefHeight="700.0" prefWidth="700.0" visible="false" AnchorPane.topAnchor="0.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="203.0" prefHeight="79.0" prefWidth="294.0" text="Állatok" textAlignment="CENTER">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <TableView id="allatokTablazat" fx:id="allatokTablazat" editable="true" prefHeight="513.0" prefWidth="700.0" />
+                  <TableView id="animalsTable" fx:id="animalsTable" editable="true" prefHeight="513.0" prefWidth="700.0" />
                   <VBox alignment="CENTER_RIGHT" layoutX="14.0" layoutY="527.0" prefHeight="131.0" prefWidth="97.0" spacing="15.0">
                      <children>
-                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="529.0" prefHeight="21.0" prefWidth="88.0" text="Név:" />
-                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="562.0" prefHeight="21.0" prefWidth="88.0" text="Fajta:" />
-                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="592.0" prefHeight="21.0" prefWidth="88.0" text="Gazda:" />
-                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="623.0" prefHeight="21.0" prefWidth="88.0" text="Státusz:" />
+                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="529.0" prefHeight="21.0" prefWidth="88.0" text="Name:" />
+                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="562.0" prefHeight="21.0" prefWidth="88.0" text="Breed:" />
+                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="592.0" prefHeight="21.0" prefWidth="88.0" text="Owner:" />
+                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="623.0" prefHeight="21.0" prefWidth="88.0" text="Status:" />
                      </children>
                   </VBox>
-                  <TextField id="inputAllatNev" fx:id="inputAllatNev" layoutX="119.0" layoutY="521.0" prefHeight="31.0" prefWidth="561.0" promptText="Mörlok" />
-                  <TextField id="inputFajta" fx:id="inputFajta" layoutX="119.0" layoutY="558.0" prefHeight="31.0" prefWidth="231.0" promptText="Akita" />
-                  <ComboBox id="inputAllatStatusz" fx:id="inputAllatStatusz" layoutX="119.0" layoutY="632.0" prefHeight="31.0" prefWidth="561.0"/>
-                  <ComboBox id="inputGazda" fx:id="inputGazda" layoutX="119.0" layoutY="595.0" prefHeight="31.0" prefWidth="561.0" />
-                  <Button id="ujAllatGomb" fx:id="ujAllatGomb" alignment="CENTER" layoutX="235.0" layoutY="667.0" mnemonicParsing="false" onAction="#hozzaadAllat" prefHeight="31.0" prefWidth="231.0" text="Új állat felvétele" />
+                  <TextField id="inputAnimalName" fx:id="inputAnimalName" layoutX="119.0" layoutY="521.0" prefHeight="31.0" prefWidth="561.0" promptText="Froyo" />
+                  <TextField id="inputBreed" fx:id="inputBreed" layoutX="119.0" layoutY="558.0" prefHeight="31.0" prefWidth="231.0" promptText="Akita" />
+                  <ComboBox id="inputAnimalStatus" fx:id="inputAnimalStatus" layoutX="119.0" layoutY="632.0" prefHeight="31.0" prefWidth="561.0"/>
+                  <ComboBox id="inputOwner" fx:id="inputOwner" layoutX="119.0" layoutY="595.0" prefHeight="31.0" prefWidth="561.0" />
+                  <Button id="newAnimalButton" fx:id="newAnimalButton" alignment="CENTER" layoutX="235.0" layoutY="667.0" mnemonicParsing="false" onAction="#addAnimal" prefHeight="31.0" prefWidth="231.0" text="Add an animal" />
                   <Label layoutX="360.0" layoutY="563.0" prefHeight="21.0" prefWidth="40.0" text="Nem:" />
-                  <ComboBox id="inputNem" fx:id="inputNem" layoutX="404.0" layoutY="558.0" prefHeight="31.0" prefWidth="277.0" />
+                  <ComboBox id="inputSex" fx:id="inputSex" layoutX="404.0" layoutY="558.0" prefHeight="31.0" prefWidth="277.0" />
                </children>
             </Pane>
-            <Pane id="feladatokPane" fx:id="feladatokPane" layoutY="90.0" prefHeight="702.0" prefWidth="700.0" visible="false" AnchorPane.topAnchor="0.0">
+            <Pane id="assignmentsPane" fx:id="assignmentsPane" layoutY="90.0" prefHeight="702.0" prefWidth="700.0" visible="false" AnchorPane.topAnchor="0.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="203.0" prefHeight="79.0" prefWidth="294.0" text="Feladatok" textAlignment="CENTER">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <TableView id="feladatokTablazat" fx:id="feladatokTablazat" editable="true" prefHeight="513.0" prefWidth="700.0" />
+                  <TableView id="assignmentsTable" fx:id="assignmentsTable" editable="true" prefHeight="513.0" prefWidth="700.0" />
                   <VBox alignment="CENTER_RIGHT" layoutX="14.0" layoutY="527.0" prefHeight="131.0" prefWidth="97.0" spacing="15.0">
                      <children>
-                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="529.0" prefHeight="21.0" prefWidth="88.0" text="Státusz:" />
-                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="562.0" prefHeight="21.0" prefWidth="88.0" text="Tárgy:" />
-                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="592.0" prefHeight="21.0" prefWidth="88.0" text="Felelős:" />
+                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="529.0" prefHeight="21.0" prefWidth="88.0" text="Status:" />
+                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="562.0" prefHeight="21.0" prefWidth="88.0" text="Subject:" />
+                        <Label alignment="CENTER_RIGHT" layoutX="28.0" layoutY="592.0" prefHeight="21.0" prefWidth="88.0" text="Assignee:" />
                      </children>
                   </VBox>
                   <VBox layoutX="117.0" layoutY="540.0" spacing="6.0">
                      <children>
-                        <ComboBox id="inputFeladatStatusz" fx:id="inputFeladatStatusz" layoutX="119.0" layoutY="521.0" prefHeight="31.0" prefWidth="561.0" />
-                        <TextField id="inputTargy" fx:id="inputTargy" layoutX="119.0" layoutY="562.0" prefHeight="31.0" prefWidth="561.0" promptText="Ógádoros - Nem megfelelő körülmények között tartott kutya" />
-                        <ComboBox id="inputFelel" fx:id="inputFelel" layoutX="119.0" layoutY="593.0" prefHeight="31.0" prefWidth="561.0" />
+                        <ComboBox id="inputAssignmentStatus" fx:id="inputAssignmentStatus" layoutX="119.0" layoutY="521.0" prefHeight="31.0" prefWidth="561.0" />
+                        <TextField id="inputSubject" fx:id="inputSubject" layoutX="119.0" layoutY="562.0" prefHeight="31.0" prefWidth="561.0" promptText="Silvermoon City - Inappropriate dog keeping on the main street" />
+                        <ComboBox id="inputAssignee" fx:id="inputAssignee" layoutX="119.0" layoutY="593.0" prefHeight="31.0" prefWidth="561.0" />
                      </children>
                   </VBox>
-                  <Button id="ujFeladatGomb" fx:id="ujFeladatGomb" alignment="CENTER" layoutX="235.0" layoutY="667.0" mnemonicParsing="false" onAction="#hozzaadFeladat" prefHeight="31.0" prefWidth="231.0" text="Új feladat felvétele" />
+                  <Button id="newAssignmentButton" fx:id="newAssignmentButton" alignment="CENTER" layoutX="235.0" layoutY="667.0" mnemonicParsing="false" onAction="#addAssignment" prefHeight="31.0" prefWidth="231.0" text="Add an assignment" />
                </children>
             </Pane>
           </children>
@@ -109,7 +109,7 @@
    <top>
       <Pane prefHeight="93.0" prefWidth="278.0" style="-fx-background-color: #062F4F;" BorderPane.alignment="CENTER">
          <children>
-              <Label fx:id="label" layoutY="29.0" minHeight="16" minWidth="69" text="Együtt egy életért, ártatlan állatokért Egyesület" textFill="WHITE">
+              <Label fx:id="label" layoutY="29.0" minHeight="16" minWidth="69" text="Together for All" textFill="WHITE">
                <font>
                   <Font name="Georgia" size="30.0" />
                </font>

@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="AnimalERP.jar" size="45106" download="eager" />
+    <jar href="AnimalERP.jar" size="44384" download="eager" />
     <jar href="lib\derby.jar" size="2838580" download="eager" />
     <jar href="lib\derbyclient.jar" size="586237" download="eager" />
     <jar href="lib\derbynet.jar" size="252393" download="eager" />

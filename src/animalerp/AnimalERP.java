@@ -7,13 +7,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Állatvédő Egyesület irányítását segítő, rendszerező szoftver.
- * Funkciók: 
- * a szervezettel kapcsolatba lépett személyek adatainak tárolása, 
- * a szervezettel kapcsolatba lépett állatok adatainak tárolása, 
- * feladatok létrehozása és nyomonkövetése az egyesület tagjai számára.
- * @author Bailo Dávid
- * @version 1.6
+ * This software is destined for helping the cooperation of an animal rescuing association.
+ * Functions: 
+ * storing the organization's personal contacts,
+ * storing data of animals under the organization's care,
+ * creating and tracking assignments for the members.
+ * @author David Bailo
  */
 
 public class AnimalERP extends Application {
@@ -25,7 +24,7 @@ public class AnimalERP extends Application {
         Scene scene = new Scene(root, 400, 400);
         
         stage.setScene(scene);
-        stage.setTitle("Állatvédő ERP");
+        stage.setTitle("Animal Shelter RP");
         stage.setResizable(false);
         stage.show();
     }
