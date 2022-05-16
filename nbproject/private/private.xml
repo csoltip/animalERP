@@ -3,8 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/David/Documents/NetBeansProjects/animalERP/src/animalerp/login.fxml</file>
             <file>file:/C:/Users/David/Documents/NetBeansProjects/animalERP/src/animalerp/View.fxml</file>
+            <file>file:/C:/Users/David/Documents/NetBeansProjects/animalERP/src/animalerp/DB.java</file>
             <file>file:/C:/Users/David/Documents/NetBeansProjects/animalERP/src/animalerp/ViewController.java</file>
+            <file>file:/C:/Users/David/Documents/NetBeansProjects/animalERP/src/animalerp/AnimalERP.java</file>
+            <file>file:/C:/Users/David/Documents/NetBeansProjects/animalERP/src/animalerp/LoginController.java</file>
         </group>
     </open-files>
 </project-private>

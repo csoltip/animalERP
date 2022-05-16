@@ -397,7 +397,9 @@ public class ViewController implements Initializable {
         assignments.addAll(newDB.getAllAssignments());
         assignmentsTable.setItems(assignments);
     }
+    //</editor-fold>
     
+//<editor-fold defaultstate="collapsed" desc="Setting up the menu">
     public void setMenu() throws NullPointerException {
         
         TreeItem<String> treeRoot = new TreeItem<>("Menu");
@@ -453,6 +455,7 @@ public class ViewController implements Initializable {
         });
     }
 //</editor-fold>
+
     
     
 //<editor-fold defaultstate="collapsed" desc="Adding new records">
